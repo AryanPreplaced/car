@@ -1,14 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons'; // Import Ionicons
+import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './screens/HomeScreen';
 import VehicleListScreen from './screens/VehicleListScreen';
 import AddEditVehicleScreen from './screens/AddEditVehicleScreen';
-import VehicleDetailsScreen from './screens/VehicleDetailsScreen';
 import OBDConnectionScreen from './screens/OBDConnectionScreen';
 import OBDDataScreen from './screens/OBDDataScreen';
-// import DashboardScreen from './screens/DashboardScreen';
-
 
 const Tab = createBottomTabNavigator();
 
@@ -19,42 +16,51 @@ const AppNavigator = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'VehicleList') {
-            iconName = focused ? 'car' : 'car-outline';
-          } else if (route.name === 'AddEditVehicle') {
-            iconName = focused ? 'add' : 'add-outline';
-          } 
-          else if (route.name === 'OBDConnection') {
-            iconName = focused ? 'bluetooth' : 'bluetooth-outline';
-          } else if (route.name === 'OBDData') {
-            iconName = focused ? 'speedometer' : 'speedometer-outline';
+          switch (route.name) {
+            case 'HomeTab':
+              iconName = focused ? 'home' : 'home-outline';
+              break;
+            case 'VehicleListTab':
+              iconName = focused ? 'car' : 'car-outline';
+              break;
+            case 'AddVehicleTab':
+              iconName = focused ? 'add-circle' : 'add-circle-outline';
+              break;
+            case 'ConnectionTab':
+              iconName = focused ? 'bluetooth' : 'bluetooth-outline';
+              break;
+            case 'DataTab':
+              iconName = focused ? 'speedometer' : 'speedometer-outline';
+              break;
+            default:
+              iconName = 'alert-circle-outline';
           }
 
-          // Return the appropriate icon component
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return <Ionicons name={iconName} size={size + 4} color={color} style={{ padding: 5 }} />;
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: 'bold',
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
-      }}
-      tabBarStyle={{
-        display: 'flex',
+        activeTintColor: '#4CAF50',
+        inactiveTintColor: '#888888',
+        style: {
+          backgroundColor: '#1e1e1e',
+          borderTopWidth: 0,
+          height: 60,
+          shadowOpacity: 0.1,
+        },
       }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="VehicleList" component={VehicleListScreen} />
-      <Tab.Screen name="AddEditVehicle" component={AddEditVehicleScreen} />
-      <Tab.Screen name="OBDConnection" component={OBDConnectionScreen} />
-      <Tab.Screen name="OBDData" component={OBDDataScreen} />
-      {/* <Tab.Screen name="Dashboard" component={DashboardScreen} /> */}
-      
-      {/* ... add other screens */}
+      <Tab.Screen name="HomeTab" component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
+      <Tab.Screen name="VehicleListTab" component={VehicleListScreen} options={{ tabBarLabel: 'Vehicle List' }} />
+      {/* <Tab.Screen name="AddVehicleTab" component={AddEditVehicleScreen} options={{ tabBarLabel: 'Add Vehicle' }} /> */}
+      <Tab.Screen name="ConnectionTab" component={OBDConnectionScreen} options={{ tabBarLabel: 'Connection' }} />
+      <Tab.Screen name="DataTab" component={OBDDataScreen} options={{ tabBarLabel: 'Data' }} />
     </Tab.Navigator>
   );
 };
 
 export default AppNavigator;
-

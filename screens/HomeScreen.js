@@ -1,80 +1,8 @@
-// import React from 'react';
-// import { View, StyleSheet, Image } from 'react-native';
-// import { Text, FAB } from 'react-native-paper';
-
-// const HomeScreen = ({ navigation }) => {
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.logoContainer}>
-//         <Image
-//           source={require('../assets/icon.png')} 
-//           style={styles.logo}
-//         />
-//         <Text style={styles.logoText}>Welcome to Vehicle Maintenance App!</Text>
-//       </View>
-
-//       <Text style={styles.descriptionText}>
-//       Add your first vehicle by clicking on the bottom right add button.</Text>
-
-//       <FAB
-//         style={styles.fab}
-//         icon="plus"
-//         onPress={() => navigation.navigate('AddEditVehicle')}
-//       />
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: '#FFFFFF',
-//   },
-//   logoContainer: {
-//     alignItems: 'center',
-//   },
-//   logo: {
-//     width: 120,
-//     height: 120,
-//     resizeMode: 'contain',
-//   },
-//   logoText: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     marginTop: 16,
-//   },
-//   descriptionText: {
-//     fontSize: 16,
-//     marginTop: 16,
-//     textAlign: 'center',
-//     paddingHorizontal: 16,
-//   },
-//   fab: {
-//     position: 'absolute',
-//     margin: 16,
-//     right: 0,
-//     bottom: 0,
-//     width: 56,
-//     height: 56,
-//     borderRadius: 28, // Half of the width and height
-//     backgroundColor: 'white',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-// });
-
-
-
-
-
-//driving mode ka
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Modal, Text, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { FAB } from 'react-native-paper';
 
-export default function HomeScreen() {
-  // State to control visibility of the modal
+export default function HomeScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -83,12 +11,27 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Main content of the screen */}
+      <View style={styles.logoContainer}>
+        <Image
+          source={require('../assets/icon.png')}
+          style={styles.logo}
+        />
+        <Text style={styles.logoText}>Welcome to Vehicle Maintenance App!</Text>
+        <Text style={styles.descriptionText}>
+          Add your first vehicle by clicking on the bottom right add button.
+        </Text>
+      </View>
+
       <TouchableOpacity onPress={toggleModal} style={styles.openButton}>
         <Text style={styles.openButtonText}>Show Driving Mode</Text>
       </TouchableOpacity>
 
-      {/* Modal component to show bottom sheet content */}
+      <FAB
+        style={styles.fab}
+        icon="plus"
+        onPress={() => navigation.navigate('AddVehicleTab')}
+      />
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -106,6 +49,7 @@ export default function HomeScreen() {
               <View style={styles.specsContainer}>
                 <View style={styles.specRow}>
                   <Text style={styles.specLabel}>Fuel consumption</Text>
+                  <Text style={styles.specValue}>6.5 L/100km</Text>
                 </View>
                 <View style={styles.specRow}>
                   <Text style={styles.specLabel}>Engine</Text>
@@ -117,12 +61,11 @@ export default function HomeScreen() {
                 </View>
                 <View style={styles.specRow}>
                   <Text style={styles.specLabel}>Tyres</Text>
-                  <Text style={styles.specValue}> 29 PSI</Text>
+                  <Text style={styles.specValue}>29 PSI</Text>
                 </View>
               </View>
-
               <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
-                <Text style={styles.closeButtonText}>Close driving mode</Text>
+                <Text style={styles.closeButtonText}>Close Driving Mode</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -135,19 +78,53 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a1a',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#121212',
+  },
+  logoContainer: {
+    alignItems: 'center',
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    resizeMode: 'contain',
+  },
+  logoText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    marginTop: 16,
+  },
+  descriptionText: {
+    fontSize: 16,
+    marginTop: 16,
+    textAlign: 'center',
+    color: '#b0b0b0',
+    paddingHorizontal: 16,
   },
   openButton: {
     backgroundColor: '#3a4a5a',
     padding: 15,
     alignItems: 'center',
     borderRadius: 10,
+    marginTop: 20,
   },
   openButtonText: {
     color: '#ffffff',
     fontSize: 16,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#4CAF50',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalBackground: {
     flex: 1,
@@ -210,7 +187,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-
 
 // export default HomeScreen;

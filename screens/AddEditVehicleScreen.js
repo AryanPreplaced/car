@@ -19,9 +19,7 @@ const AddEditVehicleScreen = ({ navigation }) => {
   const [nextServiceMileage, setNextServiceMileage] = useState('');
   const [fuelConsumption, setFuelConsumption] = useState('');
   const [totalFuelCost, setTotalFuelCost] = useState('');
-  const [documents, setDocuments] = useState([]); // Store attached documents
-
-  
+  const [documents, setDocuments] = useState([]);
 
   const handleServiceToggle = (service) => {
     if (services.includes(service)) {
@@ -34,8 +32,8 @@ const AddEditVehicleScreen = ({ navigation }) => {
   const handleDocumentPick = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: '*/*', // You can specify the allowed MIME types here
-        copyToCacheDirectory: false, // Set to true if you want to cache the file
+        type: '*/*',
+        copyToCacheDirectory: false,
       });
 
       if (result.type === 'success') {
@@ -54,22 +52,23 @@ const AddEditVehicleScreen = ({ navigation }) => {
   };
 
   const handleSave = () => {
-    // Perform save logic using AsyncStorage or state management
     navigation.goBack();
   };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.container}>
-        <Title style={styles.title}>Services</Title>
+        <Title style={styles.title}>Select Services</Title>
         <View style={styles.servicesContainer}>
-          {servicesOptions.map((service) => (
-            <Checkbox.Item
-              key={service}
-              label={service}
-              status={services.includes(service) ? 'checked' : 'unchecked'}
-              onPress={() => handleServiceToggle(service)}
-            />
+          {servicesOptions.map((service, index) => (
+            <View key={index} style={styles.checkboxItem}>
+              <Checkbox
+                status={services.includes(service) ? 'checked' : 'unchecked'}
+                onPress={() => handleServiceToggle(service)}
+                color="#4CAF50"
+              />
+              <Text style={styles.checkboxLabel}>{service}</Text>
+            </View>
           ))}
         </View>
 
@@ -80,42 +79,50 @@ const AddEditVehicleScreen = ({ navigation }) => {
             value={currentMileage}
             onChangeText={(text) => setCurrentMileage(text)}
             style={styles.input}
+            mode="outlined"
+            theme={{ colors: { text: '#ffffff', placeholder: '#888', background: '#1f1f1f' } }}
           />
           <TextInput
             label="Next Service Mileage"
             value={nextServiceMileage}
             onChangeText={(text) => setNextServiceMileage(text)}
             style={styles.input}
+            mode="outlined"
+            theme={{ colors: { text: '#ffffff', placeholder: '#888', background: '#1f1f1f' } }}
           />
         </View>
 
-        <Text style={styles.sectionTitle}>Fuel Detail</Text>
+        <Text style={styles.sectionTitle}>Fuel Details</Text>
         <View style={styles.fuelDetailContainer}>
           <TextInput
             label="Fuel Consumption"
             value={fuelConsumption}
             onChangeText={(text) => setFuelConsumption(text)}
             style={styles.input}
+            mode="outlined"
+            theme={{ colors: { text: '#ffffff', placeholder: '#888', background: '#1f1f1f' } }}
           />
           <TextInput
             label="Total Fuel Cost"
             value={totalFuelCost}
             onChangeText={(text) => setTotalFuelCost(text)}
             style={styles.input}
+            mode="outlined"
+            theme={{ colors: { text: '#ffffff', placeholder: '#888', background: '#1f1f1f' } }}
           />
         </View>
 
         <Text style={styles.sectionTitle}>Attached Documents</Text>
         <TouchableOpacity style={styles.attachmentButton} onPress={handleDocumentPick}>
-         <FontAwesome name="paperclip" size={16} color="black" style={styles.icon} />
-         </TouchableOpacity>
-         {documents.map((document, index) => (
-         <View key={index} style={styles.documentContainer}>
-        <FontAwesome name="file" size={16} color="black" style={styles.icon} />
-        <Text>{document.name} ({document.extension})</Text>
-       </View>
-       ))}
-
+          <FontAwesome name="paperclip" size={16} color="white" style={styles.icon} />
+          <Text style={styles.attachmentText}>Attach Document</Text>
+        </TouchableOpacity>
+        {documents.map((document, index) => (
+          <View key={index} style={styles.documentContainer}>
+            <FontAwesome name="file" size={16} color="#4CAF50" style={styles.icon} />
+            <Text style={styles.documentText}>{document.name} ({document.extension})</Text>
+          </View>
+        ))}
 
         <Button mode="contained" style={styles.saveButton} onPress={handleSave}>
           Save
@@ -129,26 +136,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#121212',
   },
   title: {
     fontSize: 20,
-    marginBottom: 2,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#4CAF50',
   },
   servicesContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 2,
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  checkboxItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '48%',
+    marginVertical: 5,
+    paddingVertical: 5,
+  },
+  checkboxLabel: {
+    fontSize: 14,
+    marginLeft: 8,
+    color: '#ffffff',
   },
   sectionTitle: {
     fontSize: 16,
-    marginBottom: 3,
-    marginTop: 3,
+    fontWeight: '600',
+    color: '#4CAF50',
+    marginTop: 20,
+    marginBottom: 10,
   },
   mileageContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 3,
+    marginBottom: 20,
   },
   fuelDetailContainer: {
     flexDirection: 'row',
@@ -157,27 +181,43 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    marginRight: 10,
+    marginHorizontal: 5,
   },
   saveButton: {
     backgroundColor: '#4CAF50',
-    marginTop: 20,
+    marginTop: 30,
+    paddingVertical: 10,
   },
   attachmentButton: {
-    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
     marginBottom: 10,
+  },
+  attachmentText: {
+    fontSize: 16,
+    color: '#4CAF50',
+    marginLeft: 5,
   },
   documentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 5,
+    backgroundColor: '#1f1f1f',
+    padding: 8,
+    borderRadius: 5,
+  },
+  documentText: {
+    marginLeft: 8,
+    fontSize: 14,
+    color: '#ffffff',
   },
   icon: {
     marginRight: 5,
   },
   scrollViewContainer: {
-    flexGrow: 1, // Important to allow scrolling
-    paddingVertical: 16, // Add padding at the bottom if needed
+    flexGrow: 1,
+    paddingBottom: 16,
   },
 });
 
