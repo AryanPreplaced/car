@@ -6,7 +6,6 @@ const OBDConnectionScreen = ({ navigation }) => {
     { id: '1', name: 'OBD-II Device 1' },
     { id: '2', name: 'OBD-II Device 2' },
     { id: '3', name: 'OBD-II Device 3' },
-    { id: '4', name: 'OBD-II Device 4' },
   ];
 
   const [connectedDevice, setConnectedDevice] = useState(null);

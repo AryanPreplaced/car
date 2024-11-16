@@ -5,6 +5,7 @@ const VehicleListScreen = ({ navigation }) => {
   const [vehicles] = useState([
     { id: '1', name: 'Car 1', mileage: '5000' },
     { id: '2', name: 'Car 2', mileage: '8000' },
+    { id: '3', name: 'Car 3', mileage: '3000' },
   ]);
 
   const renderVehicleItem = ({ item }) => (
@@ -32,17 +33,17 @@ const VehicleListScreen = ({ navigation }) => {
         renderItem={renderVehicleItem}
         contentContainerStyle={styles.vehicleList}
       />
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.addButton}
         onPress={() => navigation.navigate('AddVehicleTab')}
       >
         <Text style={styles.addButtonText}>Add Vehicle</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity
         style={styles.obdButton}
-        onPress={() => navigation.navigate('ConnectionTab')}
+        onPress={() => navigation.navigate("AddVehicleTab")}
       >
-        <Text style={styles.obdButtonText}>Connect to OBD-II</Text>
+        <Text style={styles.obdButtonText}>Add Vehicle</Text>
       </TouchableOpacity>
     </View>
   );

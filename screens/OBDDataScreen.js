@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const OBDDataScreen = ({ route }) => {
-  const device = { name: 'Smriti Agarwal' };
+  const device = { name: 'OBD-II Device 1' };
 
   const [obdData, setObdData] = useState({});
 
